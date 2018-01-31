@@ -1,0 +1,37 @@
+{
+  "name": "sxml",
+  "description": "Simple XML",
+  "author": {
+    "name": "Jeongho Nam",
+    "email": "samchon@samchon.org",
+    "url": "http://samchon.org"
+  },
+
+  "version": "0.0.1-dev.20180131",
+  "main": "./lib/sxml.js",
+  "typings": "./lib/sxml.d.ts",
+  "scripts": {
+    "test": "node lib/test"
+  },
+  "dependencies": {
+    "tstl": "~1.6.9"
+  },
+
+  "homepage": "https://github.com/samchon/sxml",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/samchon/sxml.git"
+  },
+  "bugs": {
+    "url": "https://github.com/samchon/sxml/issues"
+  },
+  "licenses": [
+    {
+      "type": "BSD-3-Clause",
+      "url": "https://opensource.org/licenses/BSD-3-Clause"
+    }
+  ],
+  "keywords": [
+    "xml"
+  ]
+}

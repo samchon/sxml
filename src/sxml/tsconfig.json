@@ -1,0 +1,17 @@
+{
+    "compilerOptions": 
+    {
+        "target": "es5",
+        "declaration": true,
+        "outFile": "../../lib/sxml.js",
+
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "downlevelIteration": true,
+        
+        "lib":[
+            "dom",
+            "es2015"
+        ]
+    }
+}
