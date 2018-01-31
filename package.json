@@ -6,8 +6,7 @@
     "email": "samchon@samchon.org",
     "url": "http://samchon.org"
   },
-
-  "version": "0.0.1-dev.20180131",
+  "version": "0.0.1",
   "main": "./lib/sxml.js",
   "typings": "./lib/sxml.d.ts",
   "scripts": {
@@ -16,7 +15,6 @@
   "dependencies": {
     "tstl": "~1.6.9"
   },
-
   "homepage": "https://github.com/samchon/sxml",
   "repository": {
     "type": "git",
@@ -33,5 +31,8 @@
   ],
   "keywords": [
     "xml"
-  ]
+  ],
+  "devDependencies": {
+    "@types/node": "^9.4.0"
+  }
 }

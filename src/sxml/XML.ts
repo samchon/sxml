@@ -468,7 +468,7 @@ namespace sxml
 		private static _Repeat(str: string, n: number): string
 		{
 			let ret: string = "";
-			for (let i: number = n + 1; i < n; ++i)
+			for (let i: number = 0; i < n; ++i)
 				ret += str;
 
 			return ret;
