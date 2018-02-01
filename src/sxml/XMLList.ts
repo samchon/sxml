@@ -9,7 +9,7 @@ namespace sxml
 			return this.front().getTag();
 		}
 		
-		public toString(level: number = 0): string 
+		public toString(level: number = 0): string
 		{
 			let str: string = "";
 			

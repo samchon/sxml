@@ -28,14 +28,50 @@ namespace sxml
 		------------------------------------------------------------- */
 		public constructor();
 		public constructor(str: string);
+		public constructor(xml: XML);
 
-		public constructor(str: string = "")
+		public constructor(obj: string | XML = null)
 		{
 			super();
 
-			this.property_map_ = new std.HashMap<string, string>();
-			this.value_ = "";
+			if (obj instanceof XML)
+				this._Copy_constructor(obj);
+			else
+			{
+				this.property_map_ = new std.HashMap<string, string>();
+				this.value_ = "";
 
+				if (obj != null && typeof obj == "string")
+					this._Parser_constructor(obj);
+			}
+		}
+
+		/**
+		 * @hidden
+		 */
+		private _Copy_constructor(obj: XML): void
+		{
+			// COPY MEMBERS
+			this.tag_ = obj.tag_;
+			this.value_ = obj.value_;
+			this.property_map_ = new std.HashMap(obj.property_map_);
+
+			// COPY CHILDREN
+			for (let entry of obj)
+			{
+				let xml_list: XMLList = new XMLList();
+				for (let child of entry.second)
+					xml_list.push_back(new XML(child));
+
+				this.emplace(entry.first, xml_list);
+			}
+		}
+
+		/**
+		 * @hidden
+		 */
+		private _Parser_constructor(str: string): void
+		{
 			if (str.indexOf("<") == -1)
 				return;
 
@@ -325,8 +361,7 @@ namespace sxml
 		/* -------------------------------------------------------------
 			ELEMENTS I/O
 		------------------------------------------------------------- */
-		public push(...args: std.Pair<string, XMLList>[]): number;
-		public push(...args: [string, XMLList][]): number;
+		public push(...args: std.IPair<string, XMLList>[]): number;
 		public push(...xmls: XML[]): number;
 		public push(...xmlLists: XMLList[]): number;
 
@@ -369,6 +404,20 @@ namespace sxml
 			}
 
 			return this.size();
+		}
+
+		protected _Handle_insert(first: std.HashMap.Iterator<string, XMLList>, last: std.HashMap.Iterator<string, XMLList>): void
+		{
+			for (let it = first; !it.equals(last); it = it.next())
+			{
+				let tag: string = it.first;
+				let xmlList: XMLList = it.second;
+
+				for (let xml of xmlList)
+					if (xml.getTag() != tag)
+						xml.setTag(tag);
+			}
+			super._Handle_insert(first, last);
 		}
 
 		/* -------------------------------------------------------------
