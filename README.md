@@ -1,4 +1,6 @@
 # Simple XML
+
+[![Join the chat at https://gitter.im/samchon/sxml](https://badges.gitter.im/samchon/sxml.svg)](https://gitter.im/samchon/sxml?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![NPM](https://nodei.co/npm/sxml.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/sxml)
   - GitHub Repository: https://github.com/samchon/sxml
   - Guide Documents: https://github.com/samchon/sxml/wiki
