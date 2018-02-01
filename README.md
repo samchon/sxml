@@ -1,10 +1,8 @@
 # Simple XML
-[![NPM](https://nodei.co/npm/sxml.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/sxml)
-  - GitHub Repository: https://github.com/samchon/sxml
-  - Guide Documents: https://github.com/samchon/sxml/wiki
-
-## Introduction
-Simple XML Library in TypeScript (JavaScript).
+[![npm version](https://badge.fury.io/js/sxml.svg)](https://www.npmjs.com/package/sxml)
+[![Downloads](https://img.shields.io/npm/dm/sxml.svg)](https://www.npmjs.com/package/sxml)
+[![DeepScan Grade](https://deepscan.io/api/projects/1799/branches/7793/badge/grade.svg)](https://deepscan.io/dashboard/#view=project&pid=1799&bid=7793)
+[![Chat on Gitter](https://badges.gitter.im/samchon/sxml.svg)](https://gitter.im/samchon/sxml?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 It's the most simple, concise and eledic library for XML. Just remember that structure, then you'll understand how to use it. If you want to know more about the detailed features, then utilize <u>auto-completion</u> of TypeScript or read the [Guide Documents](https://github.com/samchon/sxml/wiki).
 
@@ -33,6 +31,8 @@ npm install --save sxml
 ```
 
 ### Usage
+It's very easy. Access to XML objects considering principle structure of SXML.
+
 ```typescript
 import sxml = require("sxml");
 
