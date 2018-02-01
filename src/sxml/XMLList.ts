@@ -19,4 +19,13 @@ namespace sxml
 			return str;
 		}
 	}
+
+	export namespace XMLList 
+	{
+		export type Iterator = std.Vector.Iterator<XML>;
+		export type ReverseIterator = std.Vector.ReverseIterator<XML>;
+
+		export type iterator = Iterator;
+		export type reverse_iterator = ReverseIterator;
+	}
 }

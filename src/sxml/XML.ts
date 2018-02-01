@@ -194,8 +194,6 @@ namespace sxml
 			//CONSTRUCTING
 			for (let i: number = 0; i < helpers.length; i++) 
 			{
-				let quote = helpers[i];
-
 				if (i == 0) 
 				{
 					equal = line.indexOf("=");
@@ -426,7 +424,6 @@ namespace sxml
 		public toString(tab: number = 0): string
 		{
 			let str: string = XML._Repeat("\t", tab) + "<" + this.tag_;
-			let children_str: string = "";
 
 			//PROPERTIES
 			for (let p_it = this.property_map_.begin(); p_it.equals(this.property_map_.end()) == false; p_it = p_it.next())
@@ -545,6 +542,15 @@ namespace sxml
 				std.make_pair("\n", "&#xA;"),
 				std.make_pair("\r", "&#xD;")
 			];
+	}
+
+	export namespace XML 
+	{
+		export type Iterator = std.HashMap.Iterator<string, XMLList>;
+		export type ReverseIterator = std.HashMap.ReverseIterator<string, XMLList>;
+
+		export type iterator = Iterator;
+		export type reverse_iterator = ReverseIterator;
 	}
 
 	interface _IXMLQuote

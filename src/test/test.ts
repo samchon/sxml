@@ -90,16 +90,6 @@ function validate_equality<T>(x: T, y: T): void
 	if (std.not_equal_to(x, y))
 		throw new std.DomainError("Error on XML Parser.");
 }
-function create_parameter(name: string, type: string, value: string = ""): XML
-{
-	let xml: XML = new XML();
-	xml.setTag("parameter");
-	xml.setProperty("name", name);
-	xml.setProperty("type", type);
-	xml.setValue(value);
-
-	return xml;
-}
 
 function write(): std.Pair<Invoke, std.Vector<Member>>
 {

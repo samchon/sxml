@@ -6,14 +6,14 @@
     "email": "samchon@samchon.org",
     "url": "http://samchon.org"
   },
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "./lib/sxml.js",
   "typings": "./lib/sxml.d.ts",
   "scripts": {
     "test": "node lib/test"
   },
   "dependencies": {
-    "tstl": "~1.6.9"
+    "tstl": "~1.6.10"
   },
   "homepage": "https://github.com/samchon/sxml",
   "repository": {
