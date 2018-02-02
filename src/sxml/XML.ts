@@ -206,7 +206,7 @@ namespace sxml
 				}
 				value = line.substring(helpers[i].start + 1, helpers[i].end);
 
-				this.setProperty(label, XML._Decode_property(value));
+				this.setProperty(label, XML.decode_property(value));
 			}
 		}
 
@@ -232,7 +232,7 @@ namespace sxml
 			str = str.substring(start, end); //REDEFINE WEAK_STRING -> IN TO THE TAG
 
 			if (str.indexOf("<") == -1)
-				this.value_ = XML._Decode_value(str.trim());
+				this.value_ = XML.decode_value(str.trim());
 			else
 				this.value_ = "";
 
@@ -427,13 +427,13 @@ namespace sxml
 
 			//PROPERTIES
 			for (let p_it = this.property_map_.begin(); p_it.equals(this.property_map_.end()) == false; p_it = p_it.next())
-				str += " " + p_it.first + "=\"" + XML._Encode_property(p_it.second) + "\"";
+				str += " " + p_it.first + "=\"" + XML.encode_property(p_it.second) + "\"";
 
 			if (this.size() == 0) 
 			{
 				// VALUE
 				if (this.value_ != "")
-					str += ">" + XML._Encode_value(this.value_) + "</" + this.tag_ + ">";
+					str += ">" + XML.encode_value(this.value_) + "</" + this.tag_ + ">";
 				else
 					str += " />";
 			}
@@ -471,46 +471,6 @@ namespace sxml
 		/**
 		 * @hidden
 		 */
-		private static _Encode_value(str: string): string 
-		{
-			for (let p of XML.VALUE_CODES)
-				str = str.split(p.first).join(p.second);
-			return str;
-		}
-
-		/**
-		 * @hidden
-		 */
-		private static _Encode_property(str: string): string 
-		{
-			for (let p of XML.PROPERTY_CODES)
-				str = str.split(p.first).join(p.second);
-			return str;
-		}
-
-		/**
-		 * @hidden
-		 */
-		private static _Decode_value(str: string): string 
-		{
-			for (let p of XML.VALUE_CODES)
-				str = str.split(p.second).join(p.first);
-			return str;
-		}
-
-		/**
-		 * @hidden
-		 */
-		private static _Decode_property(str: string): string 
-		{
-			for (let p of XML.PROPERTY_CODES)
-				str = str.split(p.second).join(p.first);
-			return str;
-		}
-
-		/**
-		 * @hidden
-		 */
 		private static _Repeat(str: string, n: number): string
 		{
 			let ret: string = "";
@@ -520,28 +480,7 @@ namespace sxml
 			return ret;
 		}
 
-		/**
-		 * @hidden
-		 */
-		private static VALUE_CODES: std.Pair<string, string>[] =
-			[
-				std.make_pair("&", "&amp;"),
-				std.make_pair("<", "&lt;"),
-				std.make_pair(">", "&gt;")
-			];
-
-		/**
-		 * @hidden
-		 */
-		private static PROPERTY_CODES: std.Pair<string, string>[] =
-			[
-				...XML.VALUE_CODES,
-				std.make_pair("\"", "&quot;"),
-				std.make_pair("'", "&apos;"),
-				std.make_pair("\t", "&#x9;"),
-				std.make_pair("\n", "&#xA;"),
-				std.make_pair("\r", "&#xD;")
-			];
+		
 	}
 
 	export namespace XML 
@@ -551,6 +490,60 @@ namespace sxml
 
 		export type iterator = Iterator;
 		export type reverse_iterator = ReverseIterator;
+
+		export function head(encoding: string = "utf-8"): string
+		{
+			return `<?xml version="1.0" encoding="${encoding}" ?>`;
+		}
+
+		export function encode_value(str: string): string 
+		{
+			for (let p of VALUE_CODES)
+				str = str.split(p.first).join(p.second);
+			return str;
+		}
+		export function encode_property(str: string): string 
+		{
+			for (let p of PROPERTY_CODES)
+				str = str.split(p.first).join(p.second);
+			return str;
+		}
+
+		export function decode_value(str: string): string 
+		{
+			for (let p of VALUE_CODES)
+				str = str.split(p.second).join(p.first);
+			return str;
+		}
+		export function decode_property(str: string): string 
+		{
+			for (let p of PROPERTY_CODES)
+				str = str.split(p.second).join(p.first);
+			return str;
+		}
+
+		/**
+		 * @hidden
+		 */
+		const VALUE_CODES: std.Pair<string, string>[] =
+		[
+			std.make_pair("&", "&amp;"),
+			std.make_pair("<", "&lt;"),
+			std.make_pair(">", "&gt;")
+		];
+
+		/**
+		 * @hidden
+		 */
+		const PROPERTY_CODES: std.Pair<string, string>[] =
+		[
+			...VALUE_CODES,
+			std.make_pair("\"", "&quot;"),
+			std.make_pair("'", "&apos;"),
+			std.make_pair("\t", "&#x9;"),
+			std.make_pair("\n", "&#xA;"),
+			std.make_pair("\r", "&#xD;")
+		];
 	}
 
 	interface _IXMLQuote

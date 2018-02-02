@@ -31,15 +31,41 @@ npm install --save sxml
 ```
 
 ### Usage
-It's very easy. Access to XML objects considering principle structure of SXML.
+In this section, we will study how to parse XML-string and access to members of that XML object. It's very simple and easy. Just remember and consider the principle structure of this `SXML`.
 
+If you want to know more about the detailed features or how to generate XML, then utilize <u>auto-completion</u> of TypeScript or read the [Guide Documents](https://github.com/samchon/sxml/wiki).
+
+#### example.ts
+```xml
+<?xml version="1.0" encoding="utf-8" ?>
+<invoke listener="setMemberList">
+    <parameter name="application" type="string">simulation</parameter>
+    <parameter name="sequence" type="number">3</parameter>
+    <parameter name="memberList" type="XML">
+        <memberList>
+            <member id="samchon" email="samchon@samchon.org" name="Jeongho Nam" />
+            <member id="github" email="github@github.com" name="GitHub" />
+            <member id="robot" email="google@google.com" name="AlphaGo" />
+        </memberList>
+    </parameter>
+</invoke>
+```
+
+#### read.ts
 ```typescript
+import fs = require("fs");
 import sxml = require("sxml");
 
 import XML = sxml.XML;
 import XMLList = sxml.XMLList;
 
-function main(str: string): void
+function main(): void
+{
+    let str: string = fs.readFileSync("example.xml", "utf8");
+    trace(str);
+}
+
+function trace(str: string): void
 {
     // CREATE AN XML OBJECT BY PARSING CHARACTERS
     let xml: XML = new XML(str);
@@ -85,22 +111,7 @@ function main(str: string): void
     );
 }
 
-main
-(
-	"<invoke listener='setMemberList'>\n" +
-        "    <parameter name='application' type='string'>simulation</parameter>\n" +
-        "    <parameter name='sequence' type='number'>3</parameter>\n" +
-        "    <parameter type='XML'>\n" +
-        "        <memberList>\n" +
-        "            <member id='samchon' name='Jeongho Nam' email='samchon@samchon.org' />\n" +
-        "            <member id='github' name='GitHub' email='github@github.com' />\n" +
-        "            <member id='old_man' name='Old Kim' email='old_man@hanmail.net' />\n" +
-        "            <member id='john' name='John Doe' email='conman@gmail.com' />\n" +
-        "            <member id='robot' name='Alphago' />\n" +
-        "        </memberList>\n" +
-        "    </parameter>\n" +
-    "</invoke>"
-);
+main();
 ```
 
 
@@ -112,6 +123,5 @@ main
   - **Documents**
     - [**Guide Documents**](https://github.com/samchon/sxml/wiki)
     - [API Documents](http://samchon.github.io/sxml/api)
-  - **Related Projects**
+  - **Related Project**
     - [TSTL](https://github.com/samchon/tstl)
-    - [Samchon Framework](https://github.com/samchon/framework)
