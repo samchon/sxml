@@ -107,7 +107,7 @@ function trace(str: string): void
     (
         members.at(0).getProperty("id"), // "samchon"
         members.at(1).getProperty("email"), // "github@github.com"
-        members.at(4).getProperty("name") // "Alphago
+        members.at(2).getProperty("name") // "Alphago
     );
 }
 
