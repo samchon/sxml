@@ -20,6 +20,9 @@ namespace sxml
 		}
 	}
 
+	/**
+	 * @hidden
+	 */
 	export namespace XMLList 
 	{
 		export type Iterator = std.Vector.Iterator<XML>;

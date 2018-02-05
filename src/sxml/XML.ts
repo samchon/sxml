@@ -479,10 +479,11 @@ namespace sxml
 
 			return ret;
 		}
-
-		
 	}
 
+	/**
+	 * @hidden
+	 */
 	export namespace XML 
 	{
 		export type Iterator = std.HashMap.Iterator<string, XMLList>;

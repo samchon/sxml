@@ -13,7 +13,7 @@ declare module "sxml"
     {
         private tag_: string;
         private value_: string;
-        private properties_: std.HashMap<string, string>;
+        private property_map_: std.HashMap<string, string>;
     }
     export class XMLList extends std.Vector<XML>;
 }
@@ -35,7 +35,7 @@ In this section, we will study how to parse XML-string and access to members of 
 
 If you want to know more about the detailed features or how to generate XML, then utilize <u>auto-completion</u> of TypeScript or read the [Guide Documents](https://github.com/samchon/sxml/wiki).
 
-#### example.ts
+#### example.xml
 ```xml
 <?xml version="1.0" encoding="utf-8" ?>
 <invoke listener="setMemberList">
