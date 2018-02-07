@@ -164,7 +164,7 @@ namespace sxml
 			let equal: number;
 
 			//INDEXING
-			for (let i: number = 0; i < line.length; i++) 
+			for (let i: number = 0; i < line.length; ++i)
 			{
 				//Start of quote
 				if (inQuote == false && (line.charAt(i) == "'" || line.charAt(i) == "\"")) 
@@ -192,7 +192,7 @@ namespace sxml
 			}
 
 			//CONSTRUCTING
-			for (let i: number = 0; i < helpers.length; i++) 
+			for (let i: number = 0; i < helpers.length; ++i)
 			{
 				if (i == 0) 
 				{
@@ -255,12 +255,12 @@ namespace sxml
 			let blockEnd: number = 0;
 			start = 0;
 
-			for (let i: number = 0; i < str.length; i++) 
+			for (let i: number = 0; i < str.length; ++i) 
 			{
 				if (str.charAt(i) == "<" && str.substr(i, 2) != "</")
-					blockStart++;
+					++blockStart;
 				else if (str.substr(i, 2) == "/>" || str.substr(i, 2) == "</")
-					blockEnd++;
+					++blockEnd;
 
 				if (blockStart >= 1 && blockStart == blockEnd) 
 				{
@@ -365,41 +365,30 @@ namespace sxml
 
 		public push(...items: any[]): number
 		{
-			for (let i: number = 0; i < items.length; i++)
-			{
-				if (items[i] instanceof XML)
-				{
-					let xml: XML = items[i];
-
-					if (this.has(xml.tag_) == true)
-						this.get(xml.tag_).push(xml);
+			for (let elem of items)
+				if (elem instanceof XML)
+					if (this.has(elem.tag_) == true)
+						this.get(elem.tag_).push(elem);
 					else 
 					{
 						let xmlList: XMLList = new XMLList();
-						xmlList.push(xml);
+						xmlList.push(elem);
 
-						this.set(xml.tag_, xmlList);
+						this.set(elem.tag_, xmlList);
 					}
-				}
-				else if (items[i] instanceof XMLList)
-				{
-					let xmlList: XMLList = items[i];
-
-					if (xmlList.empty() == true)
+				else if (elem instanceof XMLList)
+					if (elem.empty() == true)
 						continue;
-
-					if (this.has(xmlList.getTag()) == true)
+					else if (this.has(elem.getTag()) == true)
 					{
-						let myXMLList: XMLList = this.get(xmlList.getTag());
+						let xmlList: XMLList = this.get(elem.getTag());
 
-						myXMLList.insert(myXMLList.end(), xmlList.begin(), xmlList.end());
+						xmlList.insert(xmlList.end(), elem.begin(), elem.end());
 					}
 					else
-						this.set(xmlList.getTag(), xmlList);
-				}
+						this.set(elem.getTag(), elem);
 				else
-					super.push(items[i]);
-			}
+					super.push(elem);
 
 			return this.size();
 		}
@@ -426,8 +415,8 @@ namespace sxml
 			let str: string = XML._Repeat("\t", tab) + "<" + this.tag_;
 
 			//PROPERTIES
-			for (let p_it = this.property_map_.begin(); p_it.equals(this.property_map_.end()) == false; p_it = p_it.next())
-				str += " " + p_it.first + "=\"" + XML.encode_property(p_it.second) + "\"";
+			for (let entry of this.property_map_)
+				str += " " + entry.first + "=\"" + XML.encode_property(entry.second) + "\"";
 
 			if (this.size() == 0) 
 			{
@@ -441,10 +430,9 @@ namespace sxml
 			{
 				// CHILDREN
 				str += ">\n";
-
-				for (let x_it = this.begin(); x_it.equals(this.end()) == false; x_it = x_it.next())
-					str += x_it.second.toString(tab + 1);
-
+				for (let entry of this)
+					str += entry.second.toString(tab + 1);
+				
 				str += XML._Repeat("\t", tab) + "</" + this.tag_ + ">";
 			}
 			return str;
@@ -455,16 +443,14 @@ namespace sxml
 		 */
 		private static _Compute_min_index(...args: number[]): number 
 		{
-			let min: number = args[0];
+			let min: number = -1;
 
-			for (let i: number = 1; i < args.length; i++)
-			{
-				if (args[i] == -1)
+			for (let elem of args)
+				if (elem == -1)
 					continue;
-
-				if (min == -1 || args[i] < min)
-					min = args[i];
-			}
+				else if (min == -1 || elem < min)
+					min = elem;
+			
 			return min;
 		}
 

@@ -11,12 +11,11 @@ namespace sxml
 		
 		public toString(level: number = 0): string
 		{
-			let str: string = "";
+			let ret: string = "";
+			for (let xml of this)
+				ret += xml.toString(level) + "\n";
 			
-			for (let i: number = 0; i < this.size(); i++)
-				str += this.at(i).toString(level) + "\n";
-
-			return str;
+			return ret;
 		}
 	}
 
