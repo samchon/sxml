@@ -1,8 +1,7 @@
 import std = require("tstl");
-import sxml = require("./sxml");
 
-import XML = sxml.XML;
-import XMLList = sxml.XMLList;
+import XML = require("./XML");
+import XMLList = require("./XMLList");
 
 class Invoke extends std.Vector<Parameter>
 {
