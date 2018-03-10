@@ -11,3 +11,4 @@ src\
 *.js.map
 .travis.yml
 package-lock.json
+tsconfig.json

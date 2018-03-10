@@ -97,6 +97,34 @@ export class XML extends std.HashMap<string, XMLList>
 			str = str.substr(0, start) + str.substr(end + 3);
 		}
 
+		// ERASE !DOCTYPE
+		start = str.indexOf("<!DOCTYPE");
+		if (start != -1)
+		{
+			let open_cnt: number = 1;
+			let close_cnt: number = 0;
+
+			for (let i: number = start + 1; i < str.length; ++i)
+			{
+				let ch: string = str.charAt(i);
+				if (ch == "<")
+					++open_cnt;
+				else if (ch == ">")
+				{
+					++close_cnt;
+					end = i;
+
+					if (open_cnt == close_cnt)
+						break;
+				}
+			}
+
+			if (open_cnt != close_cnt)
+				throw new std.DomainError("Invalid XML format was found on !DOCTYPE");
+
+			str = str.substr(0, start) + str.substr(end + 1);
+		}
+
 		//BEGIN PARSING
 		this._Parse(str);
 	}
@@ -134,7 +162,7 @@ export class XML extends std.HashMap<string, XMLList>
 				str.indexOf("/", start)
 			);
 		if (start == 0 || end == -1)
-			return;
+			throw new std.DomainError("Invalid XML format; unable to parse tag.");
 
 		this.tag_ = str.substring(start, end);
 	}
@@ -351,7 +379,7 @@ export class XML extends std.HashMap<string, XMLList>
 	{
 		let it = this.property_map_.find(key);
 		if (it.equals(this.property_map_.end()) == true)
-			throw Error("out of range");
+			throw new std.OutOfRange("Unable to find the matched key.");
 
 		this.property_map_.erase(it);
 	}
