@@ -1,8 +1,8 @@
-import std = require("tstl");
+import * as std from "tstl";
 
-import XMLList = require("./XMLList");
+import {XMLList} from "./XMLList";
 
-class XML extends std.HashMap<string, XMLList>
+export class XML extends std.HashMap<string, XMLList>
 {
 	/**
 	 * @hidden
@@ -467,10 +467,7 @@ class XML extends std.HashMap<string, XMLList>
 	}
 }
 
-/**
- * @hidden
- */
-namespace XML 
+export namespace XML 
 {
 	export type Iterator = std.HashMap.Iterator<string, XMLList>;
 	export type ReverseIterator = std.HashMap.ReverseIterator<string, XMLList>;
@@ -539,5 +536,3 @@ interface _IXMLQuote
 	start: number;
 	end: number;
 }
-
-export = XML;

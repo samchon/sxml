@@ -1,8 +1,8 @@
-import std = require("tstl");
+import * as std from "tstl";
 
-import XML = require("./XML");
+import {XML} from "./XML";
 
-class XMLList extends std.Vector<XML>
+export class XMLList extends std.Vector<XML>
 {
 	public getTag(): string
 	{
@@ -19,10 +19,7 @@ class XMLList extends std.Vector<XML>
 	}
 }
 
-/**
- * @hidden
- */
-namespace XMLList 
+export namespace XMLList 
 {
 	export type Iterator = std.Vector.Iterator<XML>;
 	export type ReverseIterator = std.Vector.ReverseIterator<XML>;
@@ -30,5 +27,3 @@ namespace XMLList
 	export type iterator = Iterator;
 	export type reverse_iterator = ReverseIterator;
 }
-
-export = XMLList;

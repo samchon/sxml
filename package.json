@@ -6,15 +6,12 @@
     "email": "samchon@samchon.org",
     "url": "http://samchon.org"
   },
-  "version": "0.0.7",
+  "version": "1.0.0",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "scripts": {
     "build": "tsc && node lib/test",
     "test": "node lib/test"
-  },
-  "dependencies": {
-    "tstl": "~x.x.x"
   },
   "homepage": "https://github.com/samchon/sxml",
   "repository": {
@@ -33,7 +30,7 @@
   "keywords": [
     "xml"
   ],
-  "devDependencies": {
-    "@types/node": "^9.4.0"
+  "dependencies": {
+    "tstl": ">= 1.7.7"
   }
 }
