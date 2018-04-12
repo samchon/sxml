@@ -41,7 +41,7 @@ export class XML extends std.HashMap<string, XMLList>
 			this.property_map_ = new std.HashMap<string, string>();
 			this.value_ = "";
 
-			if (obj != null && typeof obj == "string")
+			if (obj !== null && typeof obj === "string")
 				this._Parser_constructor(obj);
 		}
 	}
@@ -72,26 +72,26 @@ export class XML extends std.HashMap<string, XMLList>
 	 */
 	private _Parser_constructor(str: string): void
 	{
-		if (str.indexOf("<") == -1)
+		if (str.indexOf("<") === -1)
 			return;
 
 		let start: number;
 		let end: number;
 
 		//ERASE HEADER OF XML
-		if ((start = str.indexOf("<?xml")) != -1) 
+		if ((start = str.indexOf("<?xml")) !== -1) 
 		{
 			end = str.indexOf("?>", start);
 
-			if (end != -1)
+			if (end !== -1)
 				str = str.substr(end + 2);
 		}
 
 		//ERASE COMMENTS
-		while ((start = str.indexOf("<!--")) != -1) 
+		while ((start = str.indexOf("<!--")) !== -1) 
 		{
 			end = str.indexOf("-->", start);
-			if (end == -1)
+			if (end === -1)
 				break;
 
 			str = str.substr(0, start) + str.substr(end + 3);
@@ -99,7 +99,7 @@ export class XML extends std.HashMap<string, XMLList>
 
 		// ERASE !DOCTYPE
 		start = str.indexOf("<!DOCTYPE");
-		if (start != -1)
+		if (start !== -1)
 		{
 			let open_cnt: number = 1;
 			let close_cnt: number = 0;
@@ -107,19 +107,19 @@ export class XML extends std.HashMap<string, XMLList>
 			for (let i: number = start + 1; i < str.length; ++i)
 			{
 				let ch: string = str.charAt(i);
-				if (ch == "<")
+				if (ch === "<")
 					++open_cnt;
-				else if (ch == ">")
+				else if (ch === ">")
 				{
 					++close_cnt;
 					end = i;
 
-					if (open_cnt == close_cnt)
+					if (open_cnt === close_cnt)
 						break;
 				}
 			}
 
-			if (open_cnt != close_cnt)
+			if (open_cnt !== close_cnt)
 				throw new std.DomainError("Invalid XML format was found on !DOCTYPE");
 
 			str = str.substr(0, start) + str.substr(end + 1);
@@ -141,7 +141,7 @@ export class XML extends std.HashMap<string, XMLList>
 		this._Parse_properties(str);
 
 		let res = this._Parse_value(str);
-		if (res.second == true)
+		if (res.second === true)
 			this._Parse_children(res.first);
 	}
 
@@ -161,7 +161,7 @@ export class XML extends std.HashMap<string, XMLList>
 				str.indexOf(">", start),
 				str.indexOf("/", start)
 			);
-		if (start == 0 || end == -1)
+		if (start === 0 || end === -1)
 			throw new std.DomainError("Invalid XML format; unable to parse tag.");
 
 		this.tag_ = str.substring(start, end);
@@ -175,12 +175,12 @@ export class XML extends std.HashMap<string, XMLList>
 		let start: number = str.indexOf("<" + this.tag_) + this.tag_.length + 1;
 		let end: number = XML._Compute_min_index(str.lastIndexOf("/"), str.indexOf(">", start));
 
-		if (start == -1 || end == -1 || start >= end)
+		if (start === -1 || end === -1 || start >= end)
 			return;
 
 		//<comp label='ABCD' /> : " label='ABCD' "
 		let line: string = str.substring(start, end);
-		if (line.indexOf("=") == -1)
+		if (line.indexOf("=") === -1)
 			return;
 
 		let label: string;
@@ -195,22 +195,22 @@ export class XML extends std.HashMap<string, XMLList>
 		for (let i: number = 0; i < line.length; ++i)
 		{
 			//Start of quote
-			if (inQuote == false && (line.charAt(i) == "'" || line.charAt(i) == "\"")) 
+			if (inQuote === false && (line.charAt(i) === "'" || line.charAt(i) === "\"")) 
 			{
 				inQuote = true;
 				start = i;
 
-				if (line.charAt(i) == "'")
+				if (line.charAt(i) === "'")
 					quoteType = 1;
-				else if (line.charAt(i) == "\"")
+				else if (line.charAt(i) === "\"")
 					quoteType = 2;
 			}
 			else if
 				(
-				inQuote == true &&
+				inQuote === true &&
 				(
-					(quoteType == 1 && line.charAt(i) == "'") ||
-					(quoteType == 2 && line.charAt(i) == "\"")
+					(quoteType === 1 && line.charAt(i) === "'") ||
+					(quoteType === 2 && line.charAt(i) === "\"")
 				)
 			) 
 			{
@@ -222,7 +222,7 @@ export class XML extends std.HashMap<string, XMLList>
 		//CONSTRUCTING
 		for (let i: number = 0; i < helpers.length; ++i)
 		{
-			if (i == 0) 
+			if (i === 0) 
 			{
 				equal = line.indexOf("=");
 				label = line.substring(0, equal).trim();
@@ -246,7 +246,7 @@ export class XML extends std.HashMap<string, XMLList>
 		let end_slash: number = str.lastIndexOf("/");
 		let end_block: number = str.indexOf(">");
 
-		if (end_slash < end_block || end_slash + 1 == str.lastIndexOf("<")) 
+		if (end_slash < end_block || end_slash + 1 === str.lastIndexOf("<")) 
 		{
 			//STATEMENT1: <TAG />
 			//STATEMENT2: <TAG></TAG> -> SAME WITH STATEMENT1: <TAG />
@@ -259,7 +259,7 @@ export class XML extends std.HashMap<string, XMLList>
 		let end: number = str.lastIndexOf("<");
 		str = str.substring(start, end); //REDEFINE WEAK_STRING -> IN TO THE TAG
 
-		if (str.indexOf("<") == -1)
+		if (str.indexOf("<") === -1)
 			this.value_ = XML.decode_value(str.trim());
 		else
 			this.value_ = "";
@@ -272,7 +272,7 @@ export class XML extends std.HashMap<string, XMLList>
 	 */
 	private _Parse_children(str: string): void
 	{
-		if (str.indexOf("<") == -1)
+		if (str.indexOf("<") === -1)
 			return;
 
 		let start: number = str.indexOf("<");
@@ -285,12 +285,12 @@ export class XML extends std.HashMap<string, XMLList>
 
 		for (let i: number = 0; i < str.length; ++i) 
 		{
-			if (str.charAt(i) == "<" && str.substr(i, 2) != "</")
+			if (str.charAt(i) === "<" && str.substr(i, 2) !== "</")
 				++blockStart;
-			else if (str.substr(i, 2) == "/>" || str.substr(i, 2) == "</")
+			else if (str.substr(i, 2) === "/>" || str.substr(i, 2) === "</")
 				++blockEnd;
 
-			if (blockStart >= 1 && blockStart == blockEnd) 
+			if (blockStart >= 1 && blockStart === blockEnd) 
 			{
 				end = str.indexOf(">", i);
 
@@ -298,7 +298,7 @@ export class XML extends std.HashMap<string, XMLList>
 				let xml: XML = new XML();
 				xml._Parse(str.substring(start, end + 1));
 
-				if (this.has(xml.tag_) == true)
+				if (this.has(xml.tag_) === true)
 					xmlList = this.get(xml.tag_);
 				else 
 				{
@@ -378,7 +378,7 @@ export class XML extends std.HashMap<string, XMLList>
 	public eraseProperty(key: string): void
 	{
 		let it = this.property_map_.find(key);
-		if (it.equals(this.property_map_.end()) == true)
+		if (it.equals(this.property_map_.end()) === true)
 			throw new std.OutOfRange("Unable to find the matched key.");
 
 		this.property_map_.erase(it);
@@ -395,7 +395,7 @@ export class XML extends std.HashMap<string, XMLList>
 	{
 		for (let elem of items)
 			if (elem instanceof XML)
-				if (this.has(elem.tag_) == true)
+				if (this.has(elem.tag_) === true)
 					this.get(elem.tag_).push(elem);
 				else 
 				{
@@ -405,9 +405,9 @@ export class XML extends std.HashMap<string, XMLList>
 					this.set(elem.tag_, xmlList);
 				}
 			else if (elem instanceof XMLList)
-				if (elem.empty() == true)
+				if (elem.empty() === true)
 					continue;
-				else if (this.has(elem.getTag()) == true)
+				else if (this.has(elem.getTag()) === true)
 				{
 					let xmlList: XMLList = this.get(elem.getTag());
 
@@ -429,7 +429,7 @@ export class XML extends std.HashMap<string, XMLList>
 			let xmlList: XMLList = it.second;
 
 			for (let xml of xmlList)
-				if (xml.getTag() != tag)
+				if (xml.getTag() !== tag)
 					xml.setTag(tag);
 		}
 		super._Handle_insert(first, last);
@@ -446,10 +446,10 @@ export class XML extends std.HashMap<string, XMLList>
 		for (let entry of this.property_map_)
 			str += " " + entry.first + "=\"" + XML.encode_property(entry.second) + "\"";
 
-		if (this.size() == 0) 
+		if (this.size() === 0) 
 		{
 			// VALUE
-			if (this.value_ != "")
+			if (this.value_ !== "")
 				str += ">" + XML.encode_value(this.value_) + "</" + this.tag_ + ">";
 			else
 				str += " />";
@@ -474,9 +474,9 @@ export class XML extends std.HashMap<string, XMLList>
 		let min: number = -1;
 
 		for (let elem of args)
-			if (elem == -1)
+			if (elem === -1)
 				continue;
-			else if (min == -1 || elem < min)
+			else if (min === -1 || elem < min)
 				min = elem;
 		
 		return min;

@@ -47,7 +47,7 @@ class Parameter
 		ret.setProperty("name", this.name);
 		ret.setProperty("type", this.type);
 		
-		if (this.value != null)
+		if (this.value !== null)
 			if (this.value instanceof XML)
 				ret.push(this.value as XML);
 			else
@@ -150,7 +150,7 @@ function read(pair: std.Pair<Invoke, std.Vector<Member>>): void
 		validate_equality(param.name, child.getProperty("name"));
 		validate_equality(param.type, child.getProperty("type"));
 
-		if (typeof param.value == "string")
+		if (typeof param.value === "string")
 			validate_equality(param.value, child.getValue());
 	}
 
