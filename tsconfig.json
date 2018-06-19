@@ -2,10 +2,11 @@
     "compilerOptions": 
     {
         "target": "es5",
-        "declaration": true,
-        "outDir": "lib",
-
         "sourceMap": true,
+        "declaration": true,
+        "declarationMap": true,
+        "outDir": "lib",
+        
         "noImplicitAny": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,
