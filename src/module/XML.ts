@@ -1,8 +1,11 @@
-import * as std from "tstl";
+import { XMLList } from "./XMLList";
 
-import {XMLList} from "./XMLList";
+import { IPair } from "tstl/utility/IPair";
+import { DomainError, OutOfRange } from "tstl/exception";
+import { HashMap } from "tstl/container/HashMap";
+import { Pair } from "tstl/utility/Pair";
 
-export class XML extends std.HashMap<string, XMLList>
+export class XML extends HashMap<string, XMLList>
 {
 	/**
 	 * @hidden
@@ -17,7 +20,7 @@ export class XML extends std.HashMap<string, XMLList>
 	/**
 	 * @hidden
 	 */
-	private property_map_: std.HashMap<string, string>;
+	private property_map_: HashMap<string, string>;
 
 	/* =============================================================
 		CONSTRUCTORS
@@ -38,7 +41,7 @@ export class XML extends std.HashMap<string, XMLList>
 			this._Copy_constructor(obj);
 		else
 		{
-			this.property_map_ = new std.HashMap<string, string>();
+			this.property_map_ = new HashMap<string, string>();
 			this.value_ = "";
 
 			if (obj !== null && typeof obj === "string")
@@ -54,7 +57,7 @@ export class XML extends std.HashMap<string, XMLList>
 		// COPY MEMBERS
 		this.tag_ = obj.tag_;
 		this.value_ = obj.value_;
-		this.property_map_ = new std.HashMap(obj.property_map_);
+		this.property_map_ = new HashMap(obj.property_map_);
 
 		// COPY CHILDREN
 		for (let entry of obj)
@@ -120,7 +123,7 @@ export class XML extends std.HashMap<string, XMLList>
 			}
 
 			if (open_cnt !== close_cnt)
-				throw new std.DomainError("Invalid XML format was found on !DOCTYPE");
+				throw new DomainError("Invalid XML format was found on !DOCTYPE");
 
 			str = str.substr(0, start) + str.substr(end + 1);
 		}
@@ -162,7 +165,7 @@ export class XML extends std.HashMap<string, XMLList>
 				str.indexOf("/", start)
 			);
 		if (start === 0 || end === -1)
-			throw new std.DomainError("Invalid XML format; unable to parse tag.");
+			throw new DomainError("Invalid XML format; unable to parse tag.");
 
 		this.tag_ = str.substring(start, end);
 	}
@@ -241,7 +244,7 @@ export class XML extends std.HashMap<string, XMLList>
 	/**
 	 * @hidden
 	 */
-	private _Parse_value(str: string): std.Pair<string, boolean>
+	private _Parse_value(str: string): Pair<string, boolean>
 	{
 		let end_slash: number = str.lastIndexOf("/");
 		let end_block: number = str.indexOf(">");
@@ -252,7 +255,7 @@ export class XML extends std.HashMap<string, XMLList>
 			//STATEMENT2: <TAG></TAG> -> SAME WITH STATEMENT1: <TAG />
 			this.value_ = "";
 
-			return new std.Pair<string, boolean>(str, false);
+			return new Pair<string, boolean>(str, false);
 		}
 
 		let start: number = end_block + 1;
@@ -264,7 +267,7 @@ export class XML extends std.HashMap<string, XMLList>
 		else
 			this.value_ = "";
 
-		return new std.Pair<string, boolean>(str, true);
+		return new Pair<string, boolean>(str, true);
 	}
 
 	/**
@@ -332,7 +335,7 @@ export class XML extends std.HashMap<string, XMLList>
 		return this.value_;
 	}
 
-	public findProperty(key: string): std.HashMap.Iterator<string, string>
+	public findProperty(key: string): HashMap.Iterator<string, string>
 	{
 		return this.property_map_.find(key);
 	}
@@ -345,7 +348,7 @@ export class XML extends std.HashMap<string, XMLList>
 		return this.property_map_.get(key);
 	}
 
-	public getPropertyMap(): std.HashMap<string, string>
+	public getPropertyMap(): HashMap<string, string>
 	{
 		return this.property_map_;
 	}
@@ -379,7 +382,7 @@ export class XML extends std.HashMap<string, XMLList>
 	{
 		let it = this.property_map_.find(key);
 		if (it.equals(this.property_map_.end()) === true)
-			throw new std.OutOfRange("Unable to find the matched key.");
+			throw new OutOfRange("Unable to find the matched key.");
 
 		this.property_map_.erase(it);
 	}
@@ -387,7 +390,7 @@ export class XML extends std.HashMap<string, XMLList>
 	/* -------------------------------------------------------------
 		ELEMENTS I/O
 	------------------------------------------------------------- */
-	public push(...args: std.IPair<string, XMLList>[]): number;
+	public push(...args: IPair<string, XMLList>[]): number;
 	public push(...xmls: XML[]): number;
 	public push(...xmlLists: XMLList[]): number;
 
@@ -421,7 +424,7 @@ export class XML extends std.HashMap<string, XMLList>
 		return this.size();
 	}
 
-	protected _Handle_insert(first: std.HashMap.Iterator<string, XMLList>, last: std.HashMap.Iterator<string, XMLList>): void
+	protected _Handle_insert(first: HashMap.Iterator<string, XMLList>, last: HashMap.Iterator<string, XMLList>): void
 	{
 		for (let it = first; !it.equals(last); it = it.next())
 		{
@@ -497,8 +500,8 @@ export class XML extends std.HashMap<string, XMLList>
 
 export namespace XML 
 {
-	export type Iterator = std.HashMap.Iterator<string, XMLList>;
-	export type ReverseIterator = std.HashMap.ReverseIterator<string, XMLList>;
+	export type Iterator = HashMap.Iterator<string, XMLList>;
+	export type ReverseIterator = HashMap.ReverseIterator<string, XMLList>;
 
 	export type iterator = Iterator;
 	export type reverse_iterator = ReverseIterator;
@@ -537,27 +540,30 @@ export namespace XML
 	/**
 	 * @hidden
 	 */
-	const VALUE_CODES: std.Pair<string, string>[] =
+	const VALUE_CODES: Pair<string, string>[] =
 	[
-		std.make_pair("&", "&amp;"),
-		std.make_pair("<", "&lt;"),
-		std.make_pair(">", "&gt;")
+		new Pair("&", "&amp;"),
+		new Pair("<", "&lt;"),
+		new Pair(">", "&gt;")
 	];
 
 	/**
 	 * @hidden
 	 */
-	const PROPERTY_CODES: std.Pair<string, string>[] =
+	const PROPERTY_CODES: Pair<string, string>[] =
 	[
 		...VALUE_CODES,
-		std.make_pair("\"", "&quot;"),
-		std.make_pair("'", "&apos;"),
-		std.make_pair("\t", "&#x9;"),
-		std.make_pair("\n", "&#xA;"),
-		std.make_pair("\r", "&#xD;")
+		new Pair("\"", "&quot;"),
+		new Pair("'", "&apos;"),
+		new Pair("\t", "&#x9;"),
+		new Pair("\n", "&#xA;"),
+		new Pair("\r", "&#xD;")
 	];
 }
 
+/**
+ * @hidden
+ */
 interface _IXMLQuote
 {
 	type: number;

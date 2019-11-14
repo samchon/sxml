@@ -1,8 +1,9 @@
 # Simple XML
-[![Build Status](https://travis-ci.org/samchon/sxml.svg?branch=master)](https://travis-ci.org/samchon/sxml)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/samchon/sxml/blob/master/LICENSE)
 [![npm version](https://badge.fury.io/js/sxml.svg)](https://www.npmjs.com/package/sxml)
 [![Downloads](https://img.shields.io/npm/dm/sxml.svg)](https://www.npmjs.com/package/sxml)
-[![DeepScan Grade](https://deepscan.io/api/projects/1799/branches/7793/badge/grade.svg)](https://deepscan.io/dashboard/#view=project&pid=1799&bid=7793)
+[![Build Status](https://github.com/samchon/sxml/workflows/build/badge.svg)](https://github.com/samchon/sxml/actions?query=workflow%3Abuild)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsamchon%2Fsxml.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsamchon%2Fsxml?ref=badge_shield)
 [![Chat on Gitter](https://badges.gitter.im/samchon/sxml.svg)](https://gitter.im/samchon/sxml?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 It's the most simple, concise and eledic library for XML. Just remember that structure, then you'll understand how to use it. If you want to know more about the detailed features, then utilize <u>auto-completion</u> of TypeScript or read the [Guide Documents](https://github.com/samchon/sxml/wiki).

@@ -1,8 +1,8 @@
-import * as std from "tstl";
+import { Vector } from "tstl/container/Vector";
 
-import {XML} from "./XML";
+import { XML } from "./XML";
 
-export class XMLList extends std.Vector<XML>
+export class XMLList extends Vector<XML>
 {
 	public getTag(): string
 	{
@@ -21,8 +21,8 @@ export class XMLList extends std.Vector<XML>
 
 export namespace XMLList 
 {
-	export type Iterator = std.Vector.Iterator<XML>;
-	export type ReverseIterator = std.Vector.ReverseIterator<XML>;
+	export type Iterator = Vector.Iterator<XML>;
+	export type ReverseIterator = Vector.ReverseIterator<XML>;
 
 	export type iterator = Iterator;
 	export type reverse_iterator = ReverseIterator;

@@ -6,11 +6,13 @@
     "email": "samchon@samchon.org",
     "url": "http://samchon.org"
   },
-  "version": "1.0.3",
+  "version": "1.0.4",
   "main": "./lib/index.js",
   "typings": "./lib/index.d.ts",
   "scripts": {
-    "build": "tsc && node lib/test",
+    "build": "npm run compile && npm run test",
+    "compile": "tsc",
+    "dev": "tsc --watch",
     "test": "node lib/test"
   },
   "homepage": "https://github.com/samchon/sxml",
@@ -21,16 +23,14 @@
   "bugs": {
     "url": "https://github.com/samchon/sxml/issues"
   },
-  "licenses": [
-    {
-      "type": "BSD-3-Clause",
-      "url": "https://opensource.org/licenses/BSD-3-Clause"
-    }
-  ],
+  "license": "MIT",
   "keywords": [
     "xml"
   ],
   "dependencies": {
-    "tstl": ">= 2.0.0"
+    "tstl": ">= 2.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^3.7.2"
   }
 }

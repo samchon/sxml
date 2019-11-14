@@ -1,8 +1,11 @@
-import * as std from "tstl";
+import { XML } from "../module/XML";
+import { XMLList } from "../module/XMLList";
 
-import {XML, XMLList} from "./index";
+import { DomainError } from "tstl/exception";
+import { Pair } from "tstl/utility/Pair";
+import { Vector } from "tstl/container/Vector";
 
-class Invoke extends std.Vector<Parameter>
+class Invoke extends Vector<Parameter>
 {
 	public listener: string;
 
@@ -85,17 +88,17 @@ class Member
 
 function validate_equality<T>(x: T, y: T): void
 {
-	if (std.not_equal_to(x, y))
-		throw new std.DomainError("Error on XML Parser.");
+	if (x !== y)
+		throw new DomainError("Error on XML Parser.");
 }
 
-function write(): std.Pair<Invoke, std.Vector<Member>>
+function write(): Pair<Invoke, Vector<Member>>
 {
 	let invoke: Invoke = new Invoke("setMemberList");
 	invoke.push_back(new Parameter("application", "string", "simulation"));
 	invoke.push_back(new Parameter("sequence", "number", "3"));
 
-	let members: std.Vector<Member> = new std.Vector();
+	let members: Vector<Member> = new Vector();
 	members.push
 	(
 		new Member("samchon", "samchon@samchon.org", "Jeongho Nam"),
@@ -111,13 +114,13 @@ function write(): std.Pair<Invoke, std.Vector<Member>>
 
 	invoke.push_back(new Parameter("memberList", "XML", memberList));
 
-	return std.make_pair(invoke, members);
+	return new Pair(invoke, members);
 }
 
-function read(pair: std.Pair<Invoke, std.Vector<Member>>): void
+function read(pair: Pair<Invoke, Vector<Member>>): void
 {
 	let invoke: Invoke = pair.first;
-	let members: std.Vector<Member> = pair.second;
+	let members: Vector<Member> = pair.second;
 
 	// CREATE AN XML OBJECT BY PARSING CHARACTERS
 	let xml: XML = pair.first.toXML();
@@ -134,8 +137,8 @@ function read(pair: std.Pair<Invoke, std.Vector<Member>>): void
 	//----
 	// LIST OF PARAMETER OBJECTS
 	//----
-	// XML => std.HashMap<string, XMLList>
-	// XMLList => std.Vector<XML>
+	// XML => HashMap<string, XMLList>
+	// XMLList => Vector<XML>
 	let xmlList: XMLList = xml.get("parameter");
 
 	// VALIDATE SIZE
@@ -179,5 +182,6 @@ function read(pair: std.Pair<Invoke, std.Vector<Member>>): void
 function main()
 {
 	read(write());
+	console.log("Success");
 }
 main();

@@ -1,14 +1,15 @@
 # ======================================================
 #	TYPESCRIPT
 # ======================================================
-.git\
-.vscode\
-node_modules\
-build\
-src\
+.git/
+.github/
+.vscode/
+node_modules/
+src/
+
+lib/test/
 
 *.*ignore
 *.js.map
-.travis.yml
 package-lock.json
 tsconfig.json
