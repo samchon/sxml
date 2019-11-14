@@ -33,9 +33,9 @@ class Parameter
 {
 	public name: string;
 	public type: string;
-	public value: string | XML;
+	public value: string | XML | null;
 
-	public constructor(name: string, type: string, value: string | XML = null)
+	public constructor(name: string, type: string, value: string | XML | null = null)
 	{
 		this.name = name;
 		this.type = type;

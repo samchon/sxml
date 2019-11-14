@@ -10,17 +10,17 @@ export class XML extends HashMap<string, XMLList>
 	/**
 	 * @hidden
 	 */
-	private tag_: string;
+	private tag_!: string;
 
 	/**
 	 * @hidden
 	 */
-	private value_: string;
+	private value_!: string;
 
 	/**
 	 * @hidden
 	 */
-	private property_map_: HashMap<string, string>;
+	private property_map_!: HashMap<string, string>;
 
 	/* =============================================================
 		CONSTRUCTORS
@@ -33,7 +33,7 @@ export class XML extends HashMap<string, XMLList>
 	public constructor(str: string);
 	public constructor(xml: XML);
 
-	public constructor(obj: string | XML = null)
+	public constructor(obj?: string | XML)
 	{
 		super();
 
@@ -44,7 +44,7 @@ export class XML extends HashMap<string, XMLList>
 			this.property_map_ = new HashMap<string, string>();
 			this.value_ = "";
 
-			if (obj !== null && typeof obj === "string")
+			if (obj !== undefined && typeof obj === "string")
 				this._Parser_constructor(obj);
 		}
 	}
@@ -79,7 +79,7 @@ export class XML extends HashMap<string, XMLList>
 			return;
 
 		let start: number;
-		let end: number;
+		let end!: number;
 
 		//ERASE HEADER OF XML
 		if ((start = str.indexOf("<?xml")) !== -1) 
@@ -191,7 +191,7 @@ export class XML extends HashMap<string, XMLList>
 		let helpers: _IXMLQuote[] = [];
 
 		let inQuote: boolean = false;
-		let quoteType: number;
+		let quoteType!: number;
 		let equal: number;
 
 		//INDEXING
