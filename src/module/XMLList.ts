@@ -8,7 +8,13 @@ export class XMLList extends Vector<XML>
 	{
 		return this.front().getTag();
 	}
-	
+
+	public toString(): string;
+
+	/**
+	 * @internal
+	 */
+	public toString(level: number): string;
 	public toString(level: number = 0): string
 	{
 		let ret: string = "";
@@ -23,7 +29,4 @@ export namespace XMLList
 {
 	export type Iterator = Vector.Iterator<XML>;
 	export type ReverseIterator = Vector.ReverseIterator<XML>;
-
-	export type iterator = Iterator;
-	export type reverse_iterator = ReverseIterator;
 }

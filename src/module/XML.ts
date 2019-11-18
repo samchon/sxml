@@ -445,8 +445,14 @@ export class XML extends Dictionary<XMLList>
     public toJSON(): string
     {
         return this.toString();
-    }
+	}
+	
+	public toString(): string;
 
+	/**
+	 * @internal
+	 */
+	public toString(level: number): string;
 	public toString(tab: number = 0): string
 	{
 		let str: string = XML._Repeat("\t", tab) + "<" + this.tag_;
