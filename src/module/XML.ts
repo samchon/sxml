@@ -509,9 +509,6 @@ export namespace XML
 	export type Iterator = HashMap.Iterator<string, XMLList>;
 	export type ReverseIterator = HashMap.ReverseIterator<string, XMLList>;
 
-    export const Iterator = HashMap.Iterator;
-    export const ReverseIterator = HashMap.ReverseIterator;
-
 	export function head(encoding: string = "utf-8"): string
 	{
 		return `<?xml version="1.0" encoding="${encoding}" ?>`;
