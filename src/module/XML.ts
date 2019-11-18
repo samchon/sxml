@@ -1,3 +1,4 @@
+import { Dictionary } from "./internal/Dictionary";
 import { XMLList } from "./XMLList";
 
 import { IPair } from "tstl/utility/IPair";
@@ -5,7 +6,7 @@ import { DomainError, OutOfRange } from "tstl/exception";
 import { HashMap } from "tstl/container/HashMap";
 import { Pair } from "tstl/utility/Pair";
 
-export class XML extends HashMap<string, XMLList>
+export class XML extends Dictionary<XMLList>
 {
 	/**
 	 * @hidden
@@ -123,7 +124,7 @@ export class XML extends HashMap<string, XMLList>
 			}
 
 			if (open_cnt !== close_cnt)
-				throw new DomainError("Invalid XML format was found on !DOCTYPE");
+				throw new DomainError("Error on XML.constructor(): invalid XML format was found on the <!DOCTYPE />");
 
 			str = str.substr(0, start) + str.substr(end + 1);
 		}
@@ -165,7 +166,7 @@ export class XML extends HashMap<string, XMLList>
 				str.indexOf("/", start)
 			);
 		if (start === 0 || end === -1)
-			throw new DomainError("Invalid XML format; unable to parse tag.");
+			throw new DomainError("Error on XML.constructor(): invalid XML format, unable to parse tag.");
 
 		this.tag_ = str.substring(start, end);
 	}
@@ -382,7 +383,7 @@ export class XML extends HashMap<string, XMLList>
 	{
 		let it = this.property_map_.find(key);
 		if (it.equals(this.property_map_.end()) === true)
-			throw new OutOfRange("Unable to find the matched key.");
+			throw new OutOfRange("Error on XML.eraseProperty(): unable to find the matched key.");
 
 		this.property_map_.erase(it);
 	}
@@ -440,7 +441,12 @@ export class XML extends HashMap<string, XMLList>
 
 	/* -------------------------------------------------------------
 		STRING UTILS
-	------------------------------------------------------------- */
+    ------------------------------------------------------------- */
+    public toJSON(): string
+    {
+        return this.toString();
+    }
+
 	public toString(tab: number = 0): string
 	{
 		let str: string = XML._Repeat("\t", tab) + "<" + this.tag_;
@@ -503,8 +509,8 @@ export namespace XML
 	export type Iterator = HashMap.Iterator<string, XMLList>;
 	export type ReverseIterator = HashMap.ReverseIterator<string, XMLList>;
 
-	export type iterator = Iterator;
-	export type reverse_iterator = ReverseIterator;
+    export const Iterator = HashMap.Iterator;
+    export const ReverseIterator = HashMap.ReverseIterator;
 
 	export function head(encoding: string = "utf-8"): string
 	{
